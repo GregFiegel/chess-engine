@@ -14,7 +14,8 @@ SRCS := \
     main.c \
     src/fen.c \
     src/utils.c \
-    src/types.c
+    src/types.c \
+	src/movegen.c
 
 OBJS := $(SRCS:.c=.o)
 
