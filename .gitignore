@@ -1,0 +1,8 @@
+//ignore all .o files
+*.o
+#ignore executable
+chess-engine
+#ignore backup files
+*~
+#ignore compiled files
+*.out
