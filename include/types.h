@@ -30,8 +30,19 @@ struct position {
     int halfmove_clock;
     int fullmove_number;
 
-    // 10x12 mailbox board
-    int8_t board[120];
+    // bitboards for each piece type
+    uint64_t white_pawns;
+    uint64_t white_knights;
+    uint64_t white_bishops;
+    uint64_t white_rooks;
+    uint64_t white_queens;
+    uint64_t white_king;
+    uint64_t black_pawns;
+    uint64_t black_knights;
+    uint64_t black_bishops;
+    uint64_t black_rooks;
+    uint64_t black_queens;
+    uint64_t black_king;
 
     // En passant flags per square in mailbox
     bool en_passant_target_square[120];
