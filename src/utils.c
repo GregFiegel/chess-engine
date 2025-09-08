@@ -2,43 +2,46 @@
 #include <stdio.h>
 #include "types.h"
 
-int printBoard(int8_t board[]){
-    for (int i = 10; i < 120; i++) {
-        if (i==110) break;
-        int8_t piece = board[i];
-        if (piece == OFF_BOARD) {
-            printf("=");
-        } else if ((piece & 0x07) == EMPTY) {
-            printf("□");
-        } else {
-            int is_black = (piece & BLACK) ? 1 : 0;
-            switch (piece & 0x07) {
-                case PAWN:
-                    printf(is_black ? "P" : "p");
-                    break;
-                case KNIGHT:
-                    printf(is_black ? "H" : "h");
-                    break;
-                case BISHOP:
-                    printf(is_black ? "B" : "b");
-                    break;
-                case ROOK:
-                    printf(is_black ? "R" : "r");
-                    break;
-                case QUEEN:
-                    printf(is_black ? "Q" : "q");
-                    break;
-                case KING:
-                    printf(is_black ? "K" : "k");
-                    break;
-                default:
-                    printf("?");
-                    break;
+int printBoard(struct Position *position) {
+    printf("╔════════╗\n");
+    for (int i = 8; i < 0; i--) {
+        printf("║");
+        for (int j = 0; j < 8; j++) {
+            int index = i * 8 + j;
+            if(position.white_pawns|position.white_rooks|position.white_knights|position.white_bishops|position.white_queens|position.white_king & (1ULL << index)) {
+                if (position.white_pawns & (1ULL << index)) {
+                    printf("P");
+                } else if (position.white_rooks & (1ULL << index)) {
+                    printf("R");
+                } else if (position.white_knights & (1ULL << index)) {
+                    printf("N");
+                } else if (position.white_bishops & (1ULL << index)) {
+                    printf("B");
+                } else if (position.white_queens & (1ULL << index)) {
+                    printf("Q");
+                } else if (position.white_king & (1ULL << index)) {
+                    printf("K");
+                }
+            } else if(position.black_pawns|position.black_rooks|position.black_knights|position.black_bishops|position.black_queens|position.black_king & (1ULL << index)) {
+                if (position.black_pawns & (1ULL << index)) {
+                    printf("p");
+                } else if (position.black_rooks & (1ULL << index)) {
+                    printf("r");
+                } else if (position.black_knights & (1ULL << index)) {
+                    printf("n");
+                } else if (position.black_bishops & (1ULL << index)) {
+                    printf("b");
+                } else if (position.black_queens & (1ULL << index)) {
+                    printf("q");
+                } else if (position.black_king & (1ULL << index)) {
+                    printf("k");
+                }
+            } else {
+                printf(" ");
             }
         }
-        if ((i+1) % 10 == 0) {
-            printf("\n");
-        }
+        printf("║\n");
     }
+    printf("╚════════╝\n");
     return 0;
 }

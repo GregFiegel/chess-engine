@@ -5,37 +5,46 @@
 int fen_to_position(char* fen){
 
     printf ("FEN: %s\n", fen);
-    int i = 21; // Start from the first square
+    int i = 56; // Start from a8
     int j = 0;
+
     // Set piece placement
+    position.white_pawns = 0;
+    position.white_knights = 0;
+    position.white_bishops = 0;
+    position.white_rooks = 0;
+    position.white_queens = 0;
+    position.white_king = 0;
+    position.black_pawns = 0;
+    position.black_knights = 0;
+    position.black_bishops = 0;
+    position.black_rooks = 0;
+    position.black_queens = 0;
+    position.black_king = 0;
     for (j=0; fen[j]!=' '; j++) {
         if (fen[j] >= '1' && fen[j] <= '8') {
             int empty_squares = fen[j] - '0';
-            for (int k=0; k<empty_squares; k++) {
-                position.board[i] = EMPTY;
-                i++;
-            }
+            i += empty_squares;
         } else if (fen[j] == '/') {
-            i += 2; // Move to the next row
+            i -= 16; // Move to the next rank
         } else {
             int8_t piece = EMPTY;
             switch (fen[j]) {
-                case 'p': piece = PAWN | WHITE; break;
-                case 'r': piece = ROOK | WHITE; break;
-                case 'n': piece = KNIGHT | WHITE; break;
-                case 'b': piece = BISHOP | WHITE; break;
-                case 'q': piece = QUEEN | WHITE; break;
-                case 'k': piece = KING | WHITE; break;
-                case 'P': piece = PAWN | BLACK; break;
-                case 'R': piece = ROOK | BLACK; break;
-                case 'N': piece = KNIGHT | BLACK; break;
-                case 'B': piece = BISHOP | BLACK; break;
-                case 'Q': piece = QUEEN | BLACK; break;
-                case 'K': piece = KING | BLACK; break;
+                case 'p': position.black_pawns |= (1ULL << (i)); break;
+                case 'r': position.black_rooks |= (1ULL << (i)); break;
+                case 'n': position.black_knights |= (1ULL << (i)); break;
+                case 'b': position.black_bishops |= (1ULL << (i)); break;
+                case 'q': position.black_queens |= (1ULL << (i)); break;
+                case 'k': position.black_king |= (1ULL << (i)); break;
+                case 'P': position.white_pawns |= (1ULL << (i)); break;
+                case 'R': position.white_rooks |= (1ULL << (i)); break;
+                case 'N': position.white_knights |= (1ULL << (i)); break;
+                case 'B': position.white_bishops |= (1ULL << (i)); break;
+                case 'Q': position.white_queens |= (1ULL << (i)); break;
+                case 'K': position.white_king |= (1ULL << (i)); break;
                 default: perror("Invalid FEN string: unrecognized piece"); 
                          exit(EXIT_FAILURE);
             }
-            position.board[i] = piece;
             i++;
         }
     }
