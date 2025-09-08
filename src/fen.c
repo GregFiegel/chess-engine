@@ -1,4 +1,4 @@
-#include "include/types.h"
+#include "types.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,7 +12,7 @@ int fen_to_position(char* fen){
         if (fen[j] >= '1' && fen[j] <= '8') {
             int empty_squares = fen[j] - '0';
             for (int k=0; k<empty_squares; k++) {
-                position[i] = EMPTY;
+                position.board[i] = EMPTY;
                 i++;
             }
         } else if (fen[j] == '/') {
@@ -35,7 +35,7 @@ int fen_to_position(char* fen){
                 default: perror("Invalid FEN string: unrecognized piece"); 
                          exit(EXIT_FAILURE);
             }
-            position[i] = piece;
+            position.board[i] = piece;
             i++;
         }
     }
@@ -43,9 +43,9 @@ int fen_to_position(char* fen){
 
     // Set turn
     if (fen[j] == 'w') {
-        turn = WHITE_TO_MOVE;
+        position.turn = WHITE_TO_MOVE;
     } else if (fen[j] == 'b') {
-        turn = BLACK_TO_MOVE;
+        position.turn = BLACK_TO_MOVE;
     }
     else {
         perror("Invalid FEN string: missing turn information");
@@ -54,19 +54,19 @@ int fen_to_position(char* fen){
     j += 2;
 
     // Set castling rights
-    white_kingside_castle = false;
-    white_queenside_castle = false;
-    black_kingside_castle = false;
-    black_queenside_castle = false;
+    position.white_kingside_castle = false;
+    position.white_queenside_castle = false;
+    position.black_kingside_castle = false;
+    position.black_queenside_castle = false;
     if (fen[j] == '-') {
         j++;
     } else {
         while (fen[j] != ' ') {
             switch (fen[j]) {
-                case 'K': white_kingside_castle = true; break;
-                case 'Q': white_queenside_castle = true; break;
-                case 'k': black_kingside_castle = true; break;
-                case 'q': black_queenside_castle = true; break;
+                case 'K': position.white_kingside_castle = true; break;
+                case 'Q': position.white_queenside_castle = true; break;
+                case 'k': position.black_kingside_castle = true; break;
+                case 'q': position.black_queenside_castle = true; break;
                 default: perror("Invalid FEN string: invalid castling rights");
                          exit(EXIT_FAILURE);
             }
@@ -79,7 +79,7 @@ int fen_to_position(char* fen){
     for (; fen[j] != ' '; j++){
         if (fen[j] == '-') {
             for (int k=0; k<120; k++) {
-                en_passant_target_square[k] = false;
+                position.en_passant_target_square[k] = false;
             }
         } else if (fen[j] < 'a' || fen[j] > 'h' || fen[j+1] < '1' || fen[j+1] > '8') {
             perror("Invalid FEN string: invalid en passant target square");
@@ -89,33 +89,33 @@ int fen_to_position(char* fen){
             int rank = fen[j+1] - '1';
             int index = 21 + rank * 10 + file;
             for (int k=0; k<120; k++) {
-                en_passant_target_square[k] = false;
+                position.en_passant_target_square[k] = false;
             }
-            en_passant_target_square[index] = true;
+            position.en_passant_target_square[index] = true;
             j++;
         }
     }
     j++;   
 
     // Set halfmove clock
-    halfmove_clock = 0;
+    position.halfmove_clock = 0;
     for (; fen[j] != ' '; j++) {
         if (fen[j] < '0' || fen[j] > '9') {
             perror("Invalid FEN string: invalid halfmove clock");
             exit(EXIT_FAILURE);
         }
-        halfmove_clock = halfmove_clock * 10 + (fen[j] - '0');
+        position.halfmove_clock = position.halfmove_clock * 10 + (fen[j] - '0');
     }
     j++;
 
     // Set fullmove number
-    fullmove_number = 0;
+    position.fullmove_number = 0;
     for (; fen[j] != '\0' && fen[j] != '\n'; j++) {
         if (fen[j] < '0' || fen[j] > '9') {
             perror("Invalid FEN string: invalid fullmove number");
             exit(EXIT_FAILURE);
         }
-        fullmove_number = fullmove_number * 10 + (fen[j] - '0');
+        position.fullmove_number = position.fullmove_number * 10 + (fen[j] - '0');
     }
 
     return 0;

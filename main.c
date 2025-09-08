@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include "include/types.h"
-#include "include/utils.h"
-#include "include/fen.h"
+#include "types.h"
+#include "utils.h"
+#include "fen.h"
 
 char *getFen(void);
 
@@ -14,14 +14,14 @@ int main(void)
         char *fen = getFen();
         fen_to_position(fen);
         free(fen);
-        printBoard(position);
-        printf("Side to move: %s\n", turn == WHITE_TO_MOVE ? "White" : "Black");
-        printf("White kingside castling: %s\n", white_kingside_castle ? "Yes" : "No");
-        printf("White queenside castling: %s\n", white_queenside_castle ? "Yes" : "No");
-        printf("Black kingside castling: %s\n", black_kingside_castle ? "Yes" : "No");
-        printf("Black queenside castling: %s\n", black_queenside_castle ? "Yes" : "No");
-        printf("Halfmove clock: %d\n", halfmove_clock);
-        printf("Fullmove number: %d\n", fullmove_number);
+        printBoard(position.board);
+        printf("Side to move: %s\n", position.turn == WHITE_TO_MOVE ? "White" : "Black");
+        printf("White kingside castling: %s\n", position.white_kingside_castle ? "Yes" : "No");
+        printf("White queenside castling: %s\n", position.white_queenside_castle ? "Yes" : "No");
+        printf("Black kingside castling: %s\n", position.black_kingside_castle ? "Yes" : "No");
+        printf("Black queenside castling: %s\n", position.black_queenside_castle ? "Yes" : "No");
+        printf("Halfmove clock: %d\n", position.halfmove_clock);
+        printf("Fullmove number: %d\n", position.fullmove_number);
     }
     return 0;
 }

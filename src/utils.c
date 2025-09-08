@@ -1,6 +1,6 @@
 #include <stdint.h>
 #include <stdio.h>
-#include "include/types.h"
+#include "types.h"
 
 int printBoard(int8_t board[]){
     for (int i = 10; i < 120; i++) {

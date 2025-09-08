@@ -2,7 +2,7 @@
 
 # Compiler and flags
 CC      ?= cc
-CFLAGS  ?= -std=c11 -Wall -Wextra -O2 -Iinclude -I.
+CFLAGS  ?= -std=c11 -Wall -Wextra -O2 -Iinclude
 LDFLAGS ?=
 LDLIBS  ?=
 
