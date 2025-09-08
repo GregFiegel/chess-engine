@@ -1,3 +1,4 @@
 #include <stdint.h>
+#include "types.h"
 
-int printBoard(struct Position *position);
+int printBoard(struct position *position);

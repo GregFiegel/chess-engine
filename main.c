@@ -14,7 +14,7 @@ int main(void)
         char *fen = getFen();
         fen_to_position(fen);
         free(fen);
-        printBoard(position.board);
+        printBoard(&position);
         printf("Side to move: %s\n", position.turn == WHITE_TO_MOVE ? "White" : "Black");
         printf("White kingside castling: %s\n", position.white_kingside_castle ? "Yes" : "No");
         printf("White queenside castling: %s\n", position.white_queenside_castle ? "Yes" : "No");

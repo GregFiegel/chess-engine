@@ -28,7 +28,6 @@ int fen_to_position(char* fen){
         } else if (fen[j] == '/') {
             i -= 16; // Move to the next rank
         } else {
-            int8_t piece = EMPTY;
             switch (fen[j]) {
                 case 'p': position.black_pawns |= (1ULL << (i)); break;
                 case 'r': position.black_rooks |= (1ULL << (i)); break;
