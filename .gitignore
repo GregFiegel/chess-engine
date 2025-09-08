@@ -1,4 +1,4 @@
-//ignore all .o files
+#ignore all .o files
 *.o
 #ignore executable
 chess-engine
@@ -6,3 +6,5 @@ chess-engine
 *~
 #ignore compiled files
 *.out
+#ignore vscode settings
+.vscode/
